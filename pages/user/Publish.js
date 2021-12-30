@@ -5,12 +5,17 @@ import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
+import DeleteForever from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
+
 
 
 import TemplateDefault from '../../src/Template/Default'
 
 
 const useStyles = makeStyles((theme) => ({
+    mask: {},
+    mainImage: {},
     container: {
         padding: theme.spacing(2, 4, 3)
     },
@@ -20,6 +25,52 @@ const useStyles = makeStyles((theme) => ({
     },
     boxContainer: {
         paddingBottom: theme.spacing(3)
+    },
+    thumbsContainer: {
+        display: 'flex',
+        marginTop: '15px'
+    },
+    dropzone: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: '10px',
+        width: '200px',
+        height: '150px',
+        margin: '0 15px 15px 0',
+        backgroundColor: theme.pallete.background.default,
+        border: '2px dashed black',
+    },
+    thumb: {
+        position: 'relative',
+        width: '200px',
+        height: '150px',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+
+        '& $mainImage': {
+            backgroundColor: 'grey',
+            padding: '6px 10px',
+            position: 'absolute',
+            borderRadius: '2px',
+            bottom: 0,
+            left: 0,
+        },
+
+        '&:hover $mask': {
+            display: 'flex',
+        },
+
+        '& $mask': {
+            display: 'none',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            backgroundColor:'rgba(0,0,0,0.7)',
+            width: '100%',
+            height: '100%', 
+        },
     }
 }))
 
@@ -80,6 +131,29 @@ const Publish = () => {
                     <Typography component="div" variant="body2">
                         A primeira imagem é a foto principal
                     </Typography>
+                    <Box className={classes.thumbsContainer}>
+                        <Box className={classes.dropzone}>
+                            <Typography variant="body" color="primary">
+                                Clique para adcionar ou arraste a imagem para cá
+                            </Typography>
+                        </Box>
+
+                        <Box 
+                            className={classes.thumb}
+                            style={{ backgroundImage: 'url(https://source.unsplash.com/random)' }}
+                            >
+                            <Box className={classes.mainImage}>
+                                <Typography variant="body2">
+                                    principal
+                                </Typography>
+                            </Box>
+                            <Box className={classes.mask}>
+                                <IconButton color="primary">
+                                    <DeleteForever fontSize="large"/>
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    </Box>
                 </Box>    
             </Container> 
 
@@ -127,11 +201,13 @@ const Publish = () => {
                     />
                 </Box>    
             </Container>
+
             <Container maxWidth="md" className={classes.boxContainer}>
                 <Box textAlign="right">
                     <Button variant="contained" color="primary">Publicar Anuncio</Button>
                 </Box>
             </Container>
+
         </TemplateDefault>
     )
 }
