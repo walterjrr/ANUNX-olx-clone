@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles"
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
-import Button from '@material-ui/core/Button'
+import {Button, FormControl, InputLabel, OutlinedInput, InputAdornment} from '@material-ui/core'
 import DeleteForever from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -211,6 +211,21 @@ const Publish = () => {
                     />
                 </Box>    
             </Container> 
+
+            <Container maxWidth="md" className={classes.boxContainer}>
+                <Box className={classes.box}>
+                    <Typography component="h6" variant="h6">Preço</Typography>
+                    <br />
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>Valor</InputLabel>
+                        <OutlinedInput 
+                            onChange={() => {}}
+                            startAdornment={<InputAdornment position="start">R$</InputAdornment>} 
+                            labelWisth={40}
+                        />
+                    </FormControl>
+                </Box>
+            </Container>
 
             <Container maxWidth="md" className={classes.boxContainer}>
                 <Box className={classes.box}>
