@@ -9,8 +9,9 @@ import DeleteForever from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
 
 
-
+import {useDropzone} from 'react-dropzone'
 import TemplateDefault from '../../src/Template/Default'
+import { useState } from 'react'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     thumbsContainer: {
         display: 'flex',
-        marginTop: '15px'
+        flexWrap: 'wrap',
+        marginTop: '15px',
     },
     dropzone: {
         display: 'flex',
@@ -48,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
         height: '150px',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
+        margin: '0 15px 15px 0',
 
         '& $mainImage': {
             backgroundColor: 'grey',
@@ -76,6 +79,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Publish = () => {
     const classes = useStyles()
+    const [files, setFiles] = useState([])
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'image/*',
+        onDrop: (acceptedFile) => {
+            const newFiles = acceptedFile.map(file => {
+                return Object.assign(file, {
+                    preview: URL.createObjectURL(file)
+                })
+            })
+
+            setFiles([ 
+                ...files,
+                ...newFiles,
+            ])
+        }
+        
+    })
+
+    const handleRemoveFile = fileName => {
+        const newFileState = files.filter(file => file.name !== fileName)
+        setFiles(newFileState)
+    }
+    
     return(
         <TemplateDefault>
             <Container maxWidth="sm" className={classes.container} >
@@ -132,27 +159,38 @@ const Publish = () => {
                         A primeira imagem é a foto principal
                     </Typography>
                     <Box className={classes.thumbsContainer}>
-                        <Box className={classes.dropzone}>
+                        <Box className={classes.dropzone} {...getRootProps()}>
+                            <input {...getInputProps()}/>
                             <Typography variant="body" color="primary">
                                 Clique para adcionar ou arraste a imagem para cá
                             </Typography>
                         </Box>
 
-                        <Box 
-                            className={classes.thumb}
-                            style={{ backgroundImage: 'url(https://source.unsplash.com/random)' }}
-                            >
-                            <Box className={classes.mainImage}>
-                                <Typography variant="body2">
-                                    principal
-                                </Typography>
-                            </Box>
-                            <Box className={classes.mask}>
-                                <IconButton color="primary">
-                                    <DeleteForever fontSize="large"/>
-                                </IconButton>
-                            </Box>
-                        </Box>
+                        {
+                            files.map((file, index) => (
+                                <Box 
+                                    key={file.name}
+                                    className={classes.thumb}
+                                    style={{ backgroundImage: `url(${file.preview})` }}
+                                    >
+                                        {
+                                            index === 0 ? 
+                                            <Box className={classes.mainImage}>
+                                                <Typography variant="body2">
+                                                    principal
+                                                </Typography>
+                                            </Box> 
+                                            : null
+                                        }
+                                    
+                                    <Box className={classes.mask}>
+                                        <IconButton color="primary" onClick={() => handleRemoveFile(file.name)}>
+                                            <DeleteForever fontSize="large"/> 
+                                        </IconButton>
+                                    </Box>
+                                </Box>
+                            ))
+                        }
                     </Box>
                 </Box>    
             </Container> 
