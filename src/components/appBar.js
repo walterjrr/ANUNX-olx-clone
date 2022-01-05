@@ -7,24 +7,32 @@ import {AppBar,
         Button,  
         Container, 
         IconButton,
-        Avatar, 
-        makeStyles, 
+        Avatar,  
         Menu,
         MenuItem, 
         Divider,
 } from '@material-ui/core'
 
+import { makeStyles } from '@material-ui/core/styles';
+
 import {MenuIcon,
         AccountCircle,
 } from '@material-ui/icons';
 
-useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   userName: {
     marginLeft: '15px',
+  },
+  Divider: {
+    margin: '6px',
   }
 }))
 
 const ButtonAppBar = () => {
+  const [anchorUserMenu, setAnchorUserMenu] = React.useState(false)
+
+  const openUserMenu = Boolean(anchorUserMenu)
+
   const classes = useStyles()
   return (
       <AppBar position="static" elevation={3}>
@@ -38,7 +46,7 @@ const ButtonAppBar = () => {
                 Anunciar e Vender
               </Button>
             </Link>
-            <IconButton color="white">
+            <IconButton color="white" onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
               {
                 true === false
                   ? <Avatar src="" /> : <AccountCircle />
@@ -48,11 +56,24 @@ const ButtonAppBar = () => {
               </Typography>
             </IconButton>
 
-            <Menu>
-              <MenuItem>Meus Anuncios</MenuItem> 
-              <MenuItem>Publicar novos Anuncios</MenuItem> 
-              <Divider />
+            <Menu 
+              anchorEl={anchorUserMenu}
+              open={openUserMenu}
+              onClose={() => setAnchorUserMenu(null)}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              >
+              <Link href="/user/dashboard" passHref> 
+                <MenuItem>Meus Anuncios</MenuItem> 
+              </Link> 
+              <Link href="/user/publish" passHref>
+                <MenuItem>Publicar novos Anuncios</MenuItem> 
+              </Link>
+              <Divider className={classes.Divider} />
               <MenuItem>Sair</MenuItem>
+
             </Menu>
           </Toolbar>
         </Container>
