@@ -37,7 +37,7 @@ const Home = () => {
 
     return (
         <TemplateDefault>
-            <Container maxWidth="md" className={classes.searchContainer}>
+            <Container maxWidth="lg" className={classes.searchContainer}>
                 <Typography component="h1" variant="h3" align="center">
                     O que Deseja encontrar?
                 </Typography>
