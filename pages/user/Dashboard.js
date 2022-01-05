@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function Home() {
+function HomeDashboard() {
   const classes = useStyles()
   return (
     <>
@@ -37,8 +37,8 @@ function Home() {
           </Button>
         </Container>
         <Container maxWidth="md">
-          <Grid Container spacing={4} >
-            <Grid item xs={12} sm={6} md={3}>
+          <Grid container spacing={4} >
+            <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardMedia
                   className={classes.cardMedia}
@@ -59,7 +59,7 @@ function Home() {
                 </CardActions>
               </Card>
             </Grid> 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardMedia
                   className={classes.cardMedia}
@@ -80,7 +80,7 @@ function Home() {
                 </CardActions>
               </Card>
             </Grid> 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardMedia
                   className={classes.cardMedia}
@@ -101,7 +101,7 @@ function Home() {
                 </CardActions>
               </Card>
             </Grid> 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardMedia
                   className={classes.cardMedia}
@@ -129,4 +129,4 @@ function Home() {
   )
 }
 
-export default Home
+export default HomeDashboard
