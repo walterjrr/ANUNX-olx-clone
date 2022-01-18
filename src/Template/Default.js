@@ -1,11 +1,12 @@
 import Header from '../components/appBar'
+import Footer from '../components/footer'
 
 const Default = ({children}) => {
     return(
         <>
-            <Header>HEADER</Header>
+            <Header />
             {children}
-            <footer>Footer</footer>
+            <Footer />
         </>
     )
 }
